@@ -1,0 +1,30 @@
+---
+- hosts: RH-Or4cl301
+  become: yes
+  vars:
+    - user: 'pstribny'
+    - dotfiles_repo: 'git@github.com:stribny/dotfiles.git'
+    - ssh_key: '.ssh/id_rsa'
+
+  tasks:
+    - name: "Install system packages"
+      dnf: 
+        name:
+          - vim 
+            #- bat
+            #- exa
+          - podman
+          - ansible  
+        state: latest
+
+    - name: "Install Python packages"
+      become: no
+      pip:
+        name:
+          - poetry
+          - wheel
+          - netmiko
+          - numpy
+          - napalm
+        state: latest
+
